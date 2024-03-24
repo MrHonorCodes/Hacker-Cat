@@ -19,14 +19,28 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void setCurrent()
     {
-        current = wordBank.getWord();
+        current = wordBank.GetWord();
         setRemainder(current);
     }
 
     private void setRemainder(string newWord)
     {
         remainder = newWord;
-        wordOutput.text = remainder;
+
+		//outputs current word to the display
+        if (remainder.Length > 0)
+        {
+            // Split the remaining word into the first letter and the rest
+            string firstLetter = remainder.Substring(0, 1);
+            string restOfWord = remainder.Substring(1);
+
+            // Use rich text tags to color the first letter red
+            wordOutput.text = "<color=red>" + firstLetter + "</color>" + restOfWord;
+        }
+        else
+        {
+            wordOutput.text = "You Win :)";
+        }
     }
 
     // Update is called once per frame

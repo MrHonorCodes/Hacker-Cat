@@ -1,59 +1,44 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class WordBank : MonoBehaviour
 {
-    //I can change this to read from a text file later
-    private List<string> originalCode = new List<string>()
-    {
-        "string", "integer", "double", "float", "private", "void", "class"
-    };
+    string filePath = @"Assets/text/hello.txt";
+	List<string> originalWords = new List<string>();
+    List<string> workingWords = new List<string>();
 
-    private List<string> code = new List<string>();
-
-    private void Awake()
+    void Awake()
     {
-        code.AddRange(originalCode);
-        shuffle(code);
-        convertToLower(code);
+        try
+        {
+            // Read all lines from the file and add them to the list
+            originalWords.AddRange(File.ReadAllLines(filePath));
+            // Initialize workingWords after originalWords is populated
+            workingWords.AddRange(originalWords);
+
+            foreach(string word in workingWords)
+            { 
+
+                Debug.Log(word);
+            }
+        }
+        catch (IOException e)
+        {
+            Debug.LogError("Could not read the file: " + e.Message);
+        }
+
     }
 
-    private void shuffle(List<string> list)
+    public string GetWord()
     {
-        for (int i = 0; i < list.Count; i++)
+        if (workingWords.Count > 0)
         {
-            int random = Random.Range(0, list.Count);
-            string temporary = list[i];
-
-            list[i] = list[random];
-            list[random] = temporary;
+            string newWord = workingWords[0];
+            workingWords.RemoveAt(0);
+            return newWord;
         }
+        return string.Empty;
     }
-
-    private void convertToLower(List<string> list)
-    {
-        for(int i = 0;i < list.Count; i++)
-        {
-            list[i] = list[i].ToLower();
-        }
-    }
-
-    public string getWord()
-    {
-        string newWord = string.Empty;
-        if(code.Count != 0)
-        {
-            newWord = code.Last();
-            code.Remove(newWord);
-        }
-        else
-        {
-            code.AddRange(originalCode);
-            newWord = "end";
-        }
-            
-        return newWord;
-    }
-
 }
