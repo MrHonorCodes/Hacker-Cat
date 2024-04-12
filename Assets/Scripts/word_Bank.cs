@@ -10,9 +10,8 @@ public class wordBank : MonoBehaviour
     List<string> originalWords = new List<string>();
     List<string> workingWords = new List<string>();
 
-    void Start()
+    void Awake()
     {
-
         try
         {
             // Read all lines from the file and add them to the list
@@ -27,12 +26,20 @@ public class wordBank : MonoBehaviour
 
     }
 
-    public string getWord()
+    public string GetWord()
     {
         if (workingWords.Count > 0)
         {
-            string newWord = workingWords[0];
-            workingWords.RemoveAt(0);
+            String newWord = "";
+
+            foreach (String sentence in workingWords)
+            {
+                newWord += sentence;
+            }
+
+            workingWords.RemoveRange(0, workingWords.Count);
+
+            Debug.Log(newWord);
             return newWord;
         }
         return string.Empty;

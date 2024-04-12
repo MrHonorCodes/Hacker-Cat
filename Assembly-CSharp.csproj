@@ -1037,8 +1037,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Boxophobic.SkyboxCubemapExtended.Editor.csproj" />
     <ProjectReference Include="Boxophobic.Utils.Scripts.csproj" />
+    <ProjectReference Include="Boxophobic.SkyboxCubemapExtended.Editor.csproj" />
     <ProjectReference Include="Boxophobic.Utils.Editor.csproj" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />

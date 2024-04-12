@@ -4,14 +4,15 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Typer : MonoBehaviour
 {
     // create word bank
-    public wordBank wbank = null; 
-    public Text wordOutput = null;
+    public wordBank wbank;
+    public Text wordOutput;
 
     private string remainingWord = string.Empty;
     private string currentWord = string.Empty;
+    private int indexLetter;
 
     // Start is called before the first frame update
     private void Start()
@@ -22,7 +23,8 @@ public class NewBehaviourScript : MonoBehaviour
     public void setCurrentWord()
     {
         // get new word from bank word
-        currentWord = wbank.getWord();
+        currentWord = wbank.GetWord();
+        indexLetter = 0;
         setRemainingWord(currentWord);
     }
 
@@ -32,12 +34,14 @@ public class NewBehaviourScript : MonoBehaviour
         //outputs current word to the display
         if (remainingWord.Length > 0)
         {
-            // Split the remaining word into the first letter and the rest
-            string firstLetter = remainingWord.Substring(0, 1);
-            string restOfWord = remainingWord.Substring(1);
+            // Calculate the number of letters the user has typed correctly
+            int typedLength = currentWord.Length - remainingWord.Length;
+            // Get the typed part and the remaining part of the word
+            string typedPart = currentWord.Substring(0, typedLength);
+            string remainingPart = currentWord.Substring(typedLength);
 
-            // Use rich text tags to color the first letter red
-            wordOutput.text = "<color=red>" + firstLetter + "</color>" + restOfWord;
+            // Use rich text tags to color the typed part red and concatenate with the remaining part
+            wordOutput.text = "<color=red>" + typedPart + "</color>" + remainingPart;
         }
         else
         {
@@ -60,7 +64,7 @@ public class NewBehaviourScript : MonoBehaviour
             string pressedKey = Input.inputString;
 
             //check if the player pressed one key
-            if(pressedKey.Length == 1)
+            if (pressedKey.Length == 1)
             {
                 enteredLetter(pressedKey);
             }
