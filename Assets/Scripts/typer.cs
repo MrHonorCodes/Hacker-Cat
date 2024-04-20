@@ -40,8 +40,14 @@ public class Typer : MonoBehaviour
             string typedPart = currentWord.Substring(0, typedLength);
             string remainingPart = currentWord.Substring(typedLength);
 
-            // Use rich text tags to color the typed part red and concatenate with the remaining part
-            wordOutput.text = "<color=red>" + typedPart + "</color>" + remainingPart;
+            string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
+            string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
+
+            // Color the typed part red, the next letter (incorrectly typed) blue, and the rest grey
+            // If the letter is incorrect, refresh the current display without removing a letter
+            wordOutput.text = "<color=white>" + typedPart + "</color>" +
+                              "<color=grey>" + nextLetter + "</color>" +
+                              "<color=grey>" + restOfWord + "</color>";
         }
         else
         {
@@ -64,6 +70,7 @@ public class Typer : MonoBehaviour
             string pressedKey = Input.inputString;
 
             //check if the player pressed one key
+            // Check if the player pressed an alphabetic character and handle case sensitivity
             if (pressedKey.Length == 1)
             {
                 enteredLetter(pressedKey);
@@ -83,10 +90,31 @@ public class Typer : MonoBehaviour
                 setCurrentWord();
             }
         }
+        else
+        {
+            // Calculate the number of letters the user has typed correctly
+            int typedLength = currentWord.Length - remainingWord.Length;
+
+            string typedPart = currentWord.Substring(0, typedLength);
+            string remainingPart = currentWord.Substring(typedLength);
+            string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
+            string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
+            // If the letter is incorrect, refresh the current display without removing a letter
+            wordOutput.text = "<color=white>" + typedPart + "</color>" +
+                              "<color=red>" + nextLetter + "</color>" +
+                              "<color=grey>" + restOfWord + "</color>";
+        }
     }
 
     private bool isCorrectLetter(string letter)
     {
+        // Ignore spaces by automatically considering them "correct"
+        if (remainingWord[0] == ' ')
+        {
+            // Automatically skip over spaces
+            removeLetter();
+            return true;
+        }
         //returns true if the index of the letter is 0
         return remainingWord.IndexOf(letter) == 0;
     }
@@ -95,8 +123,16 @@ public class Typer : MonoBehaviour
     private void removeLetter()
     {
         // remove the first letter of the string and return the rest of the string
-        string subStr = remainingWord.Remove(0, 1);
-        setRemainingWord(subStr);
+        // Remove the first character (already checked as correct or a space)
+        remainingWord = remainingWord.Substring(1);
+
+        // Continue removing if the next character is a space
+        while (remainingWord.Length > 0 && remainingWord[0] == ' ')
+        {
+            remainingWord = remainingWord.Substring(1);
+        }
+
+        setRemainingWord(remainingWord);
     }
 
 
