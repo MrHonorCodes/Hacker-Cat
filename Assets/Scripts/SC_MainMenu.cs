@@ -22,16 +22,17 @@ public class SC_MainMenu : MonoBehaviour
         StatsMenu.SetActive(false);
     }
 
-    public void Level1Button()
-    {
-        // Play  Button has been pressed, Load Scene Level1
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ChestScene");
-    }
 
     public void Level2Button()
     {
-        // Play  Button has been pressed, Load Scene Level2
+        // Play  Button has been pressed, Load Scene Level1
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level2");
+    }
+    
+    public void Level1Button()
+    {
+        // Play  Button has been pressed, Load Scene Level1
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level1_Dog");
     }
 
     public void Level3Button()
