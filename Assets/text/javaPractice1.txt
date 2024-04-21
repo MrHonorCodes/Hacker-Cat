@@ -1,0 +1,85 @@
+import java.util.*;
+
+public class Maze
+{
+	private char mat[][];
+	private Coord currentPosition;
+	private Stack<Coord> visitStack;
+
+	class Coord
+	{
+		private int rPos;
+		private int cPos;
+		public Coord (int r, int c)
+		{
+			rPos = r; cPos = c;
+		}
+		public boolean isFree()
+		{
+			return (rPos == 0 && cPos == 0);
+		}
+		public void setPos(int r, int c)
+		{
+			rPos+= r; cPos+= c;
+		}
+		public String toString()
+		{
+			return "(" + rPos + ", " + cPos + ")";
+		}
+
+	}
+	public Maze(int seed)
+	{
+		//System.out.println(this);
+		// so you can generate the same maze for testing purposes
+		Random random = new Random(seed);
+		int rand = random.nextInt(12);
+
+		// instantiate mat and generate random maze
+		mat = new char[12][12];
+
+		// set the starting location to '.', instantiate the stack,
+		// set currentPosition and push it onto the stack
+		// careful to avoid aliasing
+		for(int i = 0; i < mat[0].length; i++)
+		{
+			mat[0][i] = 'X';
+			mat[11][i] = 'X';
+			mat[i][0] = 'X';
+			mat[i][11] = 'X';
+		}
+		mat[rand][11] = '.';
+		currentPosition = new Coord(rand,11);
+		visitStack = new Stack<Coord>();
+		visitStack.push(currentPosition);
+		mat[0][0] = 'O';
+
+			for(int i = 1; i < 11; i++)
+				for(int o = 1; o<11; o++)
+				{
+					int x = random.nextInt(2);
+					if(x == 0)
+						mat[i][o] = 'O';
+					else
+						mat[i][o] = 'X';
+				}
+
+
+	}
+	public String toString()
+	{
+		// rewrite
+		String s = "";
+		for(int i = 0; i < mat.length; i++)
+		{
+			for(int o = 0; o < mat[i].length; o++)
+			{
+				s += mat[i][o];
+				s += " ";
+			}
+			s+="\n";
+		}
+
+		return s;
+	}
+
