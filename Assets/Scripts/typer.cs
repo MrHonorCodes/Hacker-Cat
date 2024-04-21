@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Typer : MonoBehaviour
@@ -30,7 +30,8 @@ public class Typer : MonoBehaviour
 
     public void setRemainingWord(string newStr)
     {
-        remainingWord = newStr;
+        remainingWord = newStr.Trim();
+        //outputs current word to the display
         //outputs current word to the display
         if (remainingWord.Length > 0)
         {
@@ -40,13 +41,45 @@ public class Typer : MonoBehaviour
             string typedPart = currentWord.Substring(0, typedLength);
             string remainingPart = currentWord.Substring(typedLength);
 
-            // Use rich text tags to color the typed part red and concatenate with the remaining part
-            wordOutput.text = "<color=red>" + typedPart + "</color>" + remainingPart;
+            string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
+            string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
+
+            // Color the typed part red, the next letter (incorrectly typed) blue, and the rest grey
+            // If the letter is incorrect, refresh the current display without removing a letter
+            wordOutput.text = "<color=white>" + typedPart + "</color>" +
+                            "<color=grey>" + nextLetter + "</color>" +
+                            "<color=grey>" + restOfWord + "</color>";
         }
         else
-        {            
-            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelCompleteMenu");
+        {           
+                    // Check if the current scene is "FinalLevel"
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FinalLevel")
+            {
+                // If it is, load the "EndGameMenu" scene
+                UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
+            }
+            else
+            {
+                // If it's not, load the "LevelCompleteMenu" scene
+                UnityEngine.SceneManagement.SceneManager.LoadScene("LevelCompleteMenu");
+            }
+            //wordOutput.text = "You Win :)";
         }
+    }
+    public void TypeLetter(char letter)
+    {
+        if (isNextLetter(letter))
+        {
+            // Remove the typed letter from the remaining word
+            remainingWord = remainingWord.Remove(0, 1);
+            // Update the display
+            setRemainingWord(remainingWord);
+        }
+    }
+
+    private bool isNextLetter(char letter)
+    {
+        return remainingWord.Length > 0 && remainingWord[0] == letter;
     }
 
     // Update is called once per frame
@@ -82,6 +115,20 @@ public class Typer : MonoBehaviour
             {
                 setCurrentWord();
             }
+        }
+        else
+        {
+            // Calculate the number of letters the user has typed correctly
+            int typedLength = currentWord.Length - remainingWord.Length;
+
+            string typedPart = currentWord.Substring(0, typedLength);
+            string remainingPart = currentWord.Substring(typedLength);
+            string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
+            string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
+            // If the letter is incorrect, refresh the current display without removing a letter
+            wordOutput.text = "<color=white>" + typedPart + "</color>" +
+                            "<color=red>" + nextLetter + "</color>" +
+                            "<color=grey>" + restOfWord + "</color>";
         }
     }
 

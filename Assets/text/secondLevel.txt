@@ -1,0 +1,15 @@
+import java.io.*;
+
+public class Beams {
+   public static void main(String[] args) throws IOException {
+      if (args.length != 4) {
+         System.out.println(
+               "Supply n (> 0), a (>= 0.5), alpha (in degrees)\n" + 
+               "and a filename as program arguments.\n");
+         System.exit(1);
+      }
+      int n = 0;
+      double a = 0, alphaDeg = 0;
+      new BeamsObj(n, a, alphaDeg * Math.PI / 180, args[3]);
+   }
+}
