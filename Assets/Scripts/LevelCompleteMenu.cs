@@ -20,7 +20,10 @@ public class LevelCompleteMenu : MonoBehaviour
 
     public void NextLevelButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            // Get the current level from PlayerPrefs and add 1 to it
+        int nextLevel = PlayerPrefs.GetInt("CurrentLevel") + 1;
+        SceneManager.LoadScene(nextLevel);
     }
 
     public void RetryButton()

@@ -7,15 +7,29 @@ using UnityEditor;
 
 public class wordBank : MonoBehaviour
 {
-    //string filePath = @"Assets/text/jv.txt";
+    string filePath = @"Assets/text/jv.txt";
     //List<string> originalWords = new List<string>();
     //List<string> workingWords = new List<string>();
-private string[] readIn = System.IO.File.ReadAllLines(Application.dataPath + "/text/jv.txt");
+private string[] fileNames = { "jv.txt", "cPractice1.txt", "javaPractice1.txt", "pythonPractice1.txt", "secondLevel.txt", "thirdLevel.txt" };
+
+private string[] readIn;
 
     private List<string> originalCode = new List<string>();
     private List<string> code = new List<string>();
 void Awake()
 {
+        string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        int currentLevel = GetLevelFromSceneName(currentSceneName); // Get level number from scene name
+
+        if (currentLevel < 1 || currentLevel > 6)
+        {
+            Debug.LogError("Invalid level number: " + currentLevel);
+            return;
+        }
+
+        //string filePath = Application.dataPath + "/text/" + fileNames[currentLevel - 1];
+        readIn = System.IO.File.ReadAllLines(filePath);
+
     try
     {
         List<string> originalCode = new List<string>(readIn);
@@ -61,6 +75,36 @@ void Awake()
         // }
 
         return newWord;
+    }
+
+        // Get level number from scene name
+    private int GetLevelFromSceneName(string sceneName)
+    {
+        if (sceneName == "FinalLevel")
+        {
+            return 6;
+        }
+        if (sceneName == "Level1_Dog")
+        {
+            return 1;
+        }
+        if (sceneName == "Level2")
+        {
+            return 2;
+        }
+        if (sceneName == "Level3")
+        {
+            return 3;
+        }
+        if (sceneName == "Level4")
+        {
+            return 4;
+        }
+        if (sceneName == "Level5")
+        {
+            return 5;
+        }
+        return 0;
     }
 
 }

@@ -21,7 +21,7 @@ public class EndGameMenu : MonoBehaviour
 
     public void RetryButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Level1_Dog");
     }
 
     public void ReturnToTitleButton()

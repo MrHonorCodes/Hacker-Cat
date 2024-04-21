@@ -60,6 +60,7 @@ public class Typer : MonoBehaviour
             }
             else
             {
+                PlayerPrefs.SetInt("CurrentLevel", SceneManager.GetActiveScene().buildIndex);
                 // If it's not, load the "LevelCompleteMenu" scene
                 UnityEngine.SceneManagement.SceneManager.LoadScene("LevelCompleteMenu");
             }
