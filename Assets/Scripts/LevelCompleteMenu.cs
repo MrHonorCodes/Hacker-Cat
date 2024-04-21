@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndGameMenu : MonoBehaviour
+public class LevelCompleteMenu : MonoBehaviour
 {
-    [SerializeField] GameObject endGameMenu;
-
-    // Start is called before the first frame update
+    [SerializeField] GameObject levelCompleteMenu;
+        
     void Start()
     {
-        EndGameButton();
+
+        LevelCompleteButton();
     }
 
-    public void EndGameButton()
+    public void LevelCompleteButton()
     {
-        // Show End Game Menu
-        endGameMenu.gameObject.SetActive(true);
+        levelCompleteMenu.SetActive(true);
+    }
+
+    public void NextLevelButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void RetryButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
+    
     public void ReturnToTitleButton()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 }

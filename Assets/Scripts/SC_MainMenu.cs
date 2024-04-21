@@ -25,37 +25,37 @@ public class SC_MainMenu : MonoBehaviour
     public void Level1Button()
     {
         // Play  Button has been pressed, Load Scene Level1
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ChestScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level1_Dog");
     }
 
     public void Level2Button()
     {
         // Play  Button has been pressed, Load Scene Level2
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level2");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level2_Penguin");
     }
 
     public void Level3Button()
     {
         // Play  Button has been pressed, Load Scene Level3
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level3");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level3_Lion");
     }
 
     public void Level4Button()
     {
         // Play  Button has been pressed, Load Scene Level4
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level4");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level4_Chicken");
     }
 
     public void Level5Button()
     {
         // Play  Button has been pressed, Load Scene Level5
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level5");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level5_Cat");
     }
 
     public void FinalLevelButton()
     {
         // Play  Button has been pressed, Load Scene FinalLevel
-        UnityEngine.SceneManagement.SceneManager.LoadScene("FinalLevel");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("FinalBoss");
     }
 
     public void StatsButton()

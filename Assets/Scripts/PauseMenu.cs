@@ -46,7 +46,7 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartButton()
     {
-        //SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     public void ReturnToTitleButton()
