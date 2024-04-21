@@ -21,7 +21,7 @@ public class EndGameMenu : MonoBehaviour
 
     public void RetryButton()
     {
-        //SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ReturnToTitleButton()

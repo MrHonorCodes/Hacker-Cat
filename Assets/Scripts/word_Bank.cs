@@ -6,7 +6,7 @@ using System.IO;
 
 public class wordBank : MonoBehaviour
 {
-    string file1Path = @"Assets/text/jv.txt";
+    string filePath = @"Assets/text/jv.txt";
     List<string> originalWords = new List<string>();
     List<string> workingWords = new List<string>();
 
@@ -15,7 +15,7 @@ public class wordBank : MonoBehaviour
         try
         {
             // Read all lines from the file and add them to the list
-            originalWords.AddRange(File.ReadAllLines(file1Path));
+            originalWords.AddRange(File.ReadAllLines(filePath));
             // Initialize workingWords after originalWords is populated
             workingWords.AddRange(originalWords);
         }

@@ -30,7 +30,7 @@ public class Typer : MonoBehaviour
 
     public void setRemainingWord(string newStr)
     {
-        remainingWord = newStr.Trim(); // Trim any leading or trailing white spaces
+        remainingWord = newStr;
         //outputs current word to the display
         if (remainingWord.Length > 0)
         {
@@ -40,44 +40,15 @@ public class Typer : MonoBehaviour
             string typedPart = currentWord.Substring(0, typedLength);
             string remainingPart = currentWord.Substring(typedLength);
 
-            string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
-            string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
-
-            // Color the typed part red, the next letter (incorrectly typed) blue, and the rest grey
-            // If the letter is incorrect, refresh the current display without removing a letter
-            wordOutput.text = "<color=white>" + typedPart + "</color>" +
-                            "<color=grey>" + nextLetter + "</color>" +
-                            "<color=grey>" + restOfWord + "</color>";
+            // Use rich text tags to color the typed part red and concatenate with the remaining part
+            wordOutput.text = "<color=red>" + typedPart + "</color>" + remainingPart;
         }
         else
-        {
-            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FinalBoss")
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu"); // Load the EndGameMenu scene
-            }
-            else
-            {
-                wordOutput.text = "You Win :)";
-            }
-        }
-    }
-    public void TypeLetter(char letter)
-    {
-        if (isNextLetter(letter))
-        {
-            // Remove the typed letter from the remaining word
-            remainingWord = remainingWord.Remove(0, 1);
-            // Update the display
-            setRemainingWord(remainingWord);
+        {            
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelCompleteMenu");
         }
     }
 
-    private bool isNextLetter(char letter)
-    {
-        return remainingWord.Length > 0 && remainingWord[0] == letter;
-    }
-
-    
     // Update is called once per frame
     private void Update()
     {
@@ -93,7 +64,6 @@ public class Typer : MonoBehaviour
             string pressedKey = Input.inputString;
 
             //check if the player pressed one key
-            // Check if the player pressed an alphabetic character and handle case sensitivity
             if (pressedKey.Length == 1)
             {
                 enteredLetter(pressedKey);
@@ -113,31 +83,10 @@ public class Typer : MonoBehaviour
                 setCurrentWord();
             }
         }
-        else
-        {
-            // Calculate the number of letters the user has typed correctly
-            int typedLength = currentWord.Length - remainingWord.Length;
-
-            string typedPart = currentWord.Substring(0, typedLength);
-            string remainingPart = currentWord.Substring(typedLength);
-            string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
-            string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
-            // If the letter is incorrect, refresh the current display without removing a letter
-            wordOutput.text = "<color=white>" + typedPart + "</color>" +
-                              "<color=red>" + nextLetter + "</color>" +
-                              "<color=grey>" + restOfWord + "</color>";
-        }
     }
 
     private bool isCorrectLetter(string letter)
     {
-        // Ignore spaces by automatically considering them "correct"
-        if (remainingWord[0] == ' ')
-        {
-            // Automatically skip over spaces
-            removeLetter();
-            return true;
-        }
         //returns true if the index of the letter is 0
         return remainingWord.IndexOf(letter) == 0;
     }
@@ -146,16 +95,8 @@ public class Typer : MonoBehaviour
     private void removeLetter()
     {
         // remove the first letter of the string and return the rest of the string
-        // Remove the first character (already checked as correct or a space)
-        remainingWord = remainingWord.Substring(1);
-
-        // Continue removing if the next character is a space
-        while (remainingWord.Length > 0 && remainingWord[0] == ' ')
-        {
-            remainingWord = remainingWord.Substring(1);
-        }
-
-        setRemainingWord(remainingWord);
+        string subStr = remainingWord.Remove(0, 1);
+        setRemainingWord(subStr);
     }
 
 
