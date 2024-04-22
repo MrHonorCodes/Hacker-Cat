@@ -64,19 +64,14 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.20f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LevelEnvironment\DungeonVoxels\Scripts\Knight.cs" />
     <Compile Include="Assets\Scripts\SC_MainMenu.cs" />
     <Compile Include="Assets\LevelEnvironment\Lowpoly Toon Cat Lite\Demo\Cat_Lite_Demo.cs" />
     <Compile Include="Assets\Scripts\SC_BackgroundScaler.cs" />
-    <Compile Include="Assets\LevelEnvironment\DungeonVoxels\Scripts\LightFlicker.cs" />
     <Compile Include="Assets\Cat_Animator.cs" />
     <Compile Include="Assets\Scripts\word_Bank.cs" />
     <Compile Include="Assets\LevelEnvironment\VoxelAnimals\Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\LevelEnvironment\DungeonVoxels\Scripts\TargetFollow.cs" />
     <Compile Include="Assets\Scripts\EndGameMenu.cs" />
-    <Compile Include="Assets\LevelEnvironment\DungeonVoxels\Scenes\Screenshot.cs" />
     <Compile Include="Assets\LevelEnvironment\Polytope Studio\Lowpoly_Demos\Environment_Free\Helpers\MouseLook.cs" />
-    <Compile Include="Assets\LevelEnvironment\DungeonVoxels\Scripts\SpikeTrap.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\LevelEnvironment\Polytope Studio\Lowpoly_Demos\Environment_Free\Helpers\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\typer.cs" />
