@@ -28,7 +28,9 @@ public class LevelCompleteMenu : MonoBehaviour
 
     public void RetryButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); OLD CODE
+        SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
+
     }
     
     public void ReturnToTitleButton()

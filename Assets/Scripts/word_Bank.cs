@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class wordBank : MonoBehaviour
 {
-    string filePath = @"Assets/text/jv.txt";
+    string filePath = @"Assets/text/pythonPractice1.txt";
     //List<string> originalWords = new List<string>();
     //List<string> workingWords = new List<string>();
 private string[] fileNames = { "jv.txt", "cPractice1.txt", "javaPractice1.txt", "pythonPractice1.txt", "secondLevel.txt", "thirdLevel.txt" };
@@ -40,7 +40,7 @@ void Awake()
             if (i + 2 < originalCode.Count)
             {
                 // If there are at least 3 lines remaining, concatenate them
-                code.Add(originalCode[i] + originalCode[i+1] + originalCode[i+2]);
+                code.Add(originalCode[i] + "\n" +  originalCode[i+1] + "\n" + originalCode[i+2]);
             }
             else
             {
@@ -49,6 +49,10 @@ void Awake()
                 for (int j = i; j < originalCode.Count; j++)
                 {
                     remainingLines += originalCode[j];
+                    if (j < originalCode.Count - 1)
+                    {
+                        remainingLines += "\n"; // Add a newline character between lines
+                    }
                 }
                 code.Add(remainingLines);
                 break;
@@ -60,22 +64,23 @@ void Awake()
         Debug.LogError("Could not read the file: " + e.Message);
     }
 }
-    public string GetWord()
+public string GetWord()
+{
+    string newWord = string.Empty;
+    if (code.Count > 0)
     {
-        string newWord = string.Empty;
-        if (code.Count != 0)
-        {
-            newWord = code.Last();
-            code.Remove(newWord);
-        }
-        // else
-        // {
-        //     code.AddRange(originalCode);
-        //     newWord = "end";
-        // }
-
-        return newWord;
+        newWord = code[0];
+        code.RemoveAt(0);
     }
+
+    return newWord;
+}
+
+public bool IsCodeEmpty()
+{
+    return code.Count == 0;
+}
+
 
         // Get level number from scene name
     private int GetLevelFromSceneName(string sceneName)

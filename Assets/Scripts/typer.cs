@@ -26,6 +26,8 @@ public class Typer : MonoBehaviour
         currentWord = wbank.GetWord();
         indexLetter = 0;
         setRemainingWord(currentWord);
+            Debug.Log("setCurrentWord called. Current word is: " + currentWord);
+
     }
 
     public void setRemainingWord(string newStr)
@@ -52,19 +54,16 @@ public class Typer : MonoBehaviour
         }
         else
         {           
-                    // Check if the current scene is "FinalLevel"
-            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FinalLevel")
+            if (wbank.IsCodeEmpty())
             {
-                // If it is, load the "EndGameMenu" scene
-                UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
+                // Only call HandleCompletion when there are no more lines in the word bank
+                HandleCompletion();
             }
             else
             {
-                PlayerPrefs.SetInt("CurrentLevel", SceneManager.GetActiveScene().buildIndex);
-                // If it's not, load the "LevelCompleteMenu" scene
-                UnityEngine.SceneManagement.SceneManager.LoadScene("LevelCompleteMenu");
+                // If there are more lines in the word bank, get the next set of lines
+                setCurrentWord();
             }
-            //wordOutput.text = "You Win :)";
         }
     }
     public void TypeLetter(char letter)
@@ -78,6 +77,21 @@ public class Typer : MonoBehaviour
         }
     }
 
+    private void HandleCompletion()
+    {
+        // Check if the current scene is "FinalLevel"
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FinalLevel")
+        {
+            // If it is, load the "EndGameMenu" scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("CurrentLevel", SceneManager.GetActiveScene().buildIndex);
+            // If it's not, load the "LevelCompleteMenu" scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LevelCompleteMenu");
+        }
+    }
     private bool isNextLetter(char letter)
     {
         return remainingWord.Length > 0 && remainingWord[0] == letter;
@@ -148,8 +162,10 @@ public class Typer : MonoBehaviour
     }
 
 
-    private bool wordComplete()
-    {
-        return remainingWord.Length == 0;
-    }
+private bool wordComplete()
+{
+    // Check if there are no more words remaining in the current word AND the word bank is empty
+    return remainingWord.Length == 0 && wbank.IsCodeEmpty();
+}
+
 }
