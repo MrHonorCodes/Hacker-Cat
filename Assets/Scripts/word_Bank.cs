@@ -7,10 +7,10 @@ using UnityEditor;
 
 public class wordBank : MonoBehaviour
 {
-    string filePath = @"Assets/text/pythonPractice1.txt";
+    string filePath;
     //List<string> originalWords = new List<string>();
     //List<string> workingWords = new List<string>();
-private string[] fileNames = { "jv.txt", "cPractice1.txt", "javaPractice1.txt", "pythonPractice1.txt", "secondLevel.txt", "thirdLevel.txt" };
+private string[] fileNames = { "java1.txt", "python1.txt", "java2.txt", "c1.txt", "cs1.txt", "java3.txt" };
 
 private string[] readIn;
 
@@ -27,7 +27,10 @@ void Awake()
             return;
         }
 
-        //string filePath = Application.dataPath + "/text/" + fileNames[currentLevel - 1];
+        // Use the currentLevel to set the filePath from fileNames array
+        filePath = Application.dataPath + "/text/" + fileNames[currentLevel - 1]; // Arrays are 0-indexed so subtract 1
+        Debug.Log("Loading file from path: " + filePath);
+        
         readIn = System.IO.File.ReadAllLines(filePath);
 
     try
@@ -35,12 +38,12 @@ void Awake()
         List<string> originalCode = new List<string>(readIn);
 
         //read multiple lines to form a paragraph
-        for (int i = 0; i < originalCode.Count; i+=3)
+        for (int i = 0; i < originalCode.Count; i+=4)
         {
-            if (i + 2 < originalCode.Count)
+            if (i + 3 < originalCode.Count)
             {
                 // If there are at least 3 lines remaining, concatenate them
-                code.Add(originalCode[i] + "\n" +  originalCode[i+1] + "\n" + originalCode[i+2]);
+                code.Add(originalCode[i] + "\n" +  originalCode[i+1] + "\n" + originalCode[i+2] + "\n" + originalCode[i+3]);
             }
             else
             {
@@ -85,10 +88,6 @@ public bool IsCodeEmpty()
         // Get level number from scene name
     private int GetLevelFromSceneName(string sceneName)
     {
-        if (sceneName == "FinalLevel")
-        {
-            return 6;
-        }
         if (sceneName == "Level1_Dog")
         {
             return 1;
@@ -108,6 +107,10 @@ public bool IsCodeEmpty()
         if (sceneName == "Level5")
         {
             return 5;
+        }
+        if (sceneName == "FinalLevel")
+        {
+            return 6;
         }
         return 0;
     }

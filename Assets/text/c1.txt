@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+template <class T>
+class Node{
+    private:
+    T data;
+    public:
+    Node<T>* next;
+    Node<T>* prev;
+    Node<T>* up;
+    Node<T>* down;
+    Node<T>(T value){
+        data = value;
+        next = nullptr;
+        prev = nullptr;
+        up = nullptr;
+        down = nullptr;
+    }
+    T getData() const {
+        return data;
+    }

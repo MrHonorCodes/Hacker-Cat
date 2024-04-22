@@ -1,5 +1,4 @@
 import java.io.*;
-
 public class Beams {
    public static void main(String[] args) throws IOException {
       if (args.length != 4) {

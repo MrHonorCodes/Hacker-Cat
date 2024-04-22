@@ -13,11 +13,13 @@ public class Typer : MonoBehaviour
     private string remainingWord = string.Empty;
     private string currentWord = string.Empty;
     private int indexLetter;
+    private bool cursorVisible = true;
 
     // Start is called before the first frame update
     private void Start()
     {
         setCurrentWord();
+        //StartCoroutine(BlinkCursor());
     }
 
     public void setCurrentWord()
@@ -48,8 +50,9 @@ public class Typer : MonoBehaviour
 
             // Color the typed part red, the next letter (incorrectly typed) blue, and the rest grey
             // If the letter is incorrect, refresh the current display without removing a letter
+            
             wordOutput.text = "<color=white>" + typedPart + "</color>" +
-                            "<color=grey>" + nextLetter + "</color>" +
+                            "<color=yellow>" + nextLetter + "</color>" +
                             "<color=grey>" + restOfWord + "</color>";
         }
         else
@@ -141,6 +144,8 @@ public class Typer : MonoBehaviour
             string nextLetter = remainingPart.Length > 0 ? remainingPart.Substring(0, 1) : "";
             string restOfWord = remainingPart.Length > 1 ? remainingPart.Substring(1) : "";
             // If the letter is incorrect, refresh the current display without removing a letter
+            //string cursorColor = cursorVisible ? "<color=yellow>" : "<color=grey>";
+
             wordOutput.text = "<color=white>" + typedPart + "</color>" +
                             "<color=red>" + nextLetter + "</color>" +
                             "<color=grey>" + restOfWord + "</color>";
@@ -162,10 +167,27 @@ public class Typer : MonoBehaviour
     }
 
 
-private bool wordComplete()
-{
-    // Check if there are no more words remaining in the current word AND the word bank is empty
-    return remainingWord.Length == 0 && wbank.IsCodeEmpty();
-}
+    private bool wordComplete()
+    {
+        // Check if there are no more words remaining in the current word AND the word bank is empty
+        return remainingWord.Length == 0 && wbank.IsCodeEmpty();
+        }
+    // private IEnumerator BlinkCursor()
+    // {
+    //     while (true)
+    //     {
+    //                 Debug.Log("Cursor should be " + (cursorVisible ? "visible." : "invisible."));
 
+    //         // Toggle cursor visibility
+    //         cursorVisible = !cursorVisible;
+
+    //         // If there's a next letter to type, update the displayed word with the cursor visible or hidden
+    //         if (!string.IsNullOrEmpty(remainingWord))
+    //         {
+    //             setRemainingWord(remainingWord);
+    //         }
+    //         // Wait for a short period before toggling visibility again
+    //         yield return new WaitForSeconds(0.5f);
+    //     }
+    // }
 }

@@ -1,0 +1,21 @@
+import java.util.*;
+public class Maze{
+	private Coord currentPosition;
+	private Stack<Coord> visitStack;
+	class Coord{
+		private int rPos;
+		private int cPos;
+		public Coord (int r, int c){
+			rPos = r; cPos = c;
+		}
+		public boolean isFree(){
+			return (rPos == 0 && cPos == 0);
+		}
+		public void setPos(int r, int c){
+			rPos+= r; cPos+= c;
+		}
+		public String toString(){
+			return "(" + rPos + ", " + cPos + ")";
+		}
+	}
+}
