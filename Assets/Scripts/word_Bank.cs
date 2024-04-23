@@ -7,84 +7,65 @@ using UnityEditor;
 
 public class wordBank : MonoBehaviour
 {
-    string filePath;
-    //List<string> originalWords = new List<string>();
-    //List<string> workingWords = new List<string>();
-private string[] fileNames = { "java1.txt", "python1.txt", "java2.txt", "c1.txt", "cs1.txt", "java3.txt" };
-
-private string[] readIn;
-
-    private List<string> originalCode = new List<string>();
     private List<string> code = new List<string>();
-void Awake()
-{
-        string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        int currentLevel = GetLevelFromSceneName(currentSceneName); // Get level number from scene name
-
-        if (currentLevel < 1 || currentLevel > 6)
-        {
-            Debug.LogError("Invalid level number: " + currentLevel);
-            return;
-        }
-
-        // Use the currentLevel to set the filePath from fileNames array
-        filePath = Application.dataPath + "/text/" + fileNames[currentLevel - 1]; // Arrays are 0-indexed so subtract 1
-        Debug.Log("Loading file from path: " + filePath);
-        
-        readIn = System.IO.File.ReadAllLines(filePath);
-
-    try
+    void Awake()
     {
-        List<string> originalCode = new List<string>(readIn);
+            string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            int currentLevel = GetLevelFromSceneName(currentSceneName); // Get level number from scene name
 
-        //read multiple lines to form a paragraph
-        for (int i = 0; i < originalCode.Count; i+=4)
-        {
-            if (i + 3 < originalCode.Count)
+            if (currentLevel < 1 || currentLevel > 6)
             {
-                // If there are at least 3 lines remaining, concatenate them
-                code.Add(originalCode[i] + "\n" +  originalCode[i+1] + "\n" + originalCode[i+2] + "\n" + originalCode[i+3]);
+                Debug.LogError("Invalid level number: " + currentLevel);
+                return;
+            }
+
+            // fileNames array should only contain the filenames without extension, assuming they are .txt
+            string[] fileNames = { "java1", "python1", "java2", "c1", "cs1", "java3" };
+
+            // Use Resources.Load to access the text file associated with the current level
+            TextAsset textFile = Resources.Load<TextAsset>(fileNames[currentLevel - 1]);
+
+            if (textFile != null)
+            {
+                // Split the file into lines and add them to the code list
+                string[] lines = textFile.text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+                ProcessLines(lines);
             }
             else
             {
-                // If there are less than 3 lines remaining, concatenate what's left
-                string remainingLines = string.Empty;
-                for (int j = i; j < originalCode.Count; j++)
-                {
-                    remainingLines += originalCode[j];
-                    if (j < originalCode.Count - 1)
-                    {
-                        remainingLines += "\n"; // Add a newline character between lines
-                    }
-                }
-                code.Add(remainingLines);
-                break;
+                Debug.LogError("Could not load the text file: " + fileNames[currentLevel - 1]);
             }
+    }
+
+    private void ProcessLines(string[] lines)
+    {
+        for (int i = 0; i < lines.Length; i += 4)
+        {
+            string paragraph = "";
+            for (int j = i; j < i + 4 && j < lines.Length; j++)
+            {
+                paragraph += lines[j];
+                if (j < i + 3 && j < lines.Length - 1)
+                    paragraph += "\n";
+            }
+            code.Add(paragraph);
         }
     }
-    catch (IOException e)
+    public string GetWord()
     {
-        Debug.LogError("Could not read the file: " + e.Message);
+        string newWord = string.Empty;
+        if (code.Count > 0)
+        {
+            newWord = code[0];
+            code.RemoveAt(0);
+        }
+
+        return newWord;
     }
-}
-public string GetWord()
-{
-    string newWord = string.Empty;
-    if (code.Count > 0)
+    public bool IsCodeEmpty()
     {
-        newWord = code[0];
-        code.RemoveAt(0);
+        return code.Count == 0;
     }
-
-    return newWord;
-}
-
-public bool IsCodeEmpty()
-{
-    return code.Count == 0;
-}
-
-
         // Get level number from scene name
     private int GetLevelFromSceneName(string sceneName)
     {
@@ -114,5 +95,4 @@ public bool IsCodeEmpty()
         }
         return 0;
     }
-
 }

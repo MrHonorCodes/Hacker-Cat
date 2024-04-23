@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: adbfc8bacdffdbe4d97f74b24aad07e7
-  - enabled: 0
-    path: Assets/Scenes/ChestScene.unity
-    guid: d424c047b0895ea4490b9850ff44981d
   - enabled: 1
     path: Assets/Scenes/Level1_Dog.unity
     guid: 50f3c2c7b277cd54180d48b9265d2110
@@ -35,19 +32,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelCompleteMenu.unity
     guid: 17f35f34866fb794481839da79dea02e
-  - enabled: 0
-    path: Assets/Unused Scenes/Level2_Penguin.unity
-    guid: 6a89ccf5070015c4cbd05606c07ca531
-  - enabled: 0
-    path: Assets/Unused Scenes/Level3_Lion.unity
-    guid: da4f6890700a8bc41a372f956b21245c
-  - enabled: 0
-    path: Assets/Unused Scenes/Level4_Chicken.unity
-    guid: bc892efb57ec9734a9cfa508681ae99e
-  - enabled: 0
-    path: Assets/Unused Scenes/Level5_Cat.unity
-    guid: 41d9a641c1a26f04ca63efaf289498e3
-  - enabled: 0
-    path: Assets/Unused Scenes/FinalBoss.unity
-    guid: 9a5a84b2f5de6d845bc2c091989538f4
   m_configObjects: {}
